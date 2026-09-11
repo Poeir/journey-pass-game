@@ -1,0 +1,17 @@
+.adm-scans__outcome {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+.adm-scans__outcome--match {
+  background: rgba(33, 206, 155, 0.15);
+  color: #0c8a64;
+}
+.adm-scans__outcome--mismatch {
+  background: rgba(222, 58, 69, 0.12);
+  color: var(--validation);
+}

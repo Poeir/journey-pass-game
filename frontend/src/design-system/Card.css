@@ -1,0 +1,16 @@
+.card {
+  border-radius: var(--r-xl);
+  padding: 14px;
+  background: #fff;
+  border: 1.5px solid var(--gray-1);
+}
+.card--plain { background: #fff; }
+.card--peach { background: var(--gf-seashell); border-color: var(--gf-flame); }
+.card--sky   { background: var(--venio-zircon); border-color: var(--venio-bluetiful); }
+.card--cream { background: var(--salesbear-cornmilk); border-color: var(--gray-1); }
+.card--ink   { background: var(--gray-1); color: #fff; border-color: var(--gray-1); }
+
+.card--sketch {
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.08);
+  position: relative;
+}

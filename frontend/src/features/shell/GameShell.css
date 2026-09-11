@@ -1,0 +1,20 @@
+.shell {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.shell__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow-y: auto;
+}
+.shell__route-fallback {
+  flex: 1;
+  min-height: 0;
+  /* Paint a solid background so the browser/Lighthouse register an FCP
+     even before the lazy route chunk has finished loading. */
+  background: var(--gf-seashell, #fff3ec);
+}

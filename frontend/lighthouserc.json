@@ -1,0 +1,45 @@
+{
+  "ci": {
+    "collect": {
+      "staticDistDir": "./dist",
+      "url": [
+        "http://localhost/",
+        "http://localhost/login",
+        "http://localhost/ranking"
+      ],
+      "numberOfRuns": 3,
+      "settings": {
+        "preset": "desktop",
+        "skipAudits": ["uses-http2"]
+      }
+    },
+    "assert": {
+      "preset": "lighthouse:recommended",
+      "assertions": {
+        "categories:performance": ["error", { "minScore": 0.9 }],
+        "categories:accessibility": ["warn", { "minScore": 0.9 }],
+        "categories:best-practices": ["warn", { "minScore": 0.9 }],
+        "categories:seo": "off",
+        "categories:pwa": "off",
+        "first-contentful-paint": ["warn", { "maxNumericValue": 1500 }],
+        "largest-contentful-paint": ["warn", { "maxNumericValue": 2500 }],
+        "total-blocking-time": ["warn", { "maxNumericValue": 200 }],
+        "cumulative-layout-shift": ["warn", { "maxNumericValue": 0.1 }],
+        "total-byte-weight": ["warn", { "maxNumericValue": 1000000 }],
+        "unminified-javascript": "off",
+        "unminified-css": "off",
+        "unused-javascript": "off",
+        "unused-css-rules": "off",
+        "uses-text-compression": "off",
+        "uses-long-cache-ttl": "off",
+        "csp-xss": "off",
+        "is-crawlable": "off",
+        "robots-txt": "off",
+        "image-aspect-ratio": "off"
+      }
+    },
+    "upload": {
+      "target": "temporary-public-storage"
+    }
+  }
+}

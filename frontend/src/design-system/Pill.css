@@ -1,0 +1,16 @@
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: 1.5px solid var(--gray-1);
+  border-radius: var(--r-pill);
+  padding: 3px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.4;
+  background: #fff;
+  color: var(--gray-1);
+}
+.pill--flame { background: var(--gf-flame); color: #fff; border-color: var(--gf-flame); }
+.pill--ink   { background: var(--gray-1); color: #fff; }
+.pill--blue  { background: var(--venio-bluetiful); color: #fff; border-color: var(--venio-bluetiful); }

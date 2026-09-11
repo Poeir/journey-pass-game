@@ -1,0 +1,18 @@
+export const ROUTES = {
+  welcome: '/',
+  user: '/user',
+  missions: '/missions',
+  triviaIntro: '/missions/trivia',
+  triviaCards: '/missions/trivia/cards',
+  triviaScan: (cardId: string) => `/missions/trivia/${cardId}/scan`,
+  teammateIntro: '/missions/teammate',
+  teammate: '/missions/teammate/list',
+  teammateScan: '/missions/teammate/scan',
+  success: (ref: string) => `/result/success?ref=${encodeURIComponent(ref)}`,
+  fail: (pairId: string) => `/result/fail/${pairId}`,
+  chatConfirm: (pairId: string) => `/chat/${pairId}`,
+  complete: '/complete',
+  timeUp: '/time-up',
+  memoryWall: '/memory',
+  ranking: '/ranking',
+} as const;

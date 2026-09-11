@@ -1,0 +1,70 @@
+.adm-memories__tile {
+  cursor: pointer;
+  background: var(--gray-11);
+  position: relative;
+  text-align: left;
+  padding: 0;
+  font-family: inherit;
+}
+.adm-memories__caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 6px 8px;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0));
+  color: #fff;
+  font-size: 11px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.adm-memories__caption .adm-table__sub { color: rgba(255, 255, 255, 0.8); }
+
+.adm-memories__modal {
+  position: fixed;
+  inset: 0;
+  background: var(--bg-overlay);
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  z-index: 30;
+}
+.adm-memories__modal-card {
+  background: #fff;
+  border: 1px solid var(--border-default);
+  border-radius: var(--r-xl);
+  padding: 20px;
+  width: 100%;
+  max-width: 520px;
+  box-shadow: var(--sh-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.adm-memories__hero { aspect-ratio: 4 / 3; width: 100%; }
+.adm-memories__hero-img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--r-md);
+  border: 1px solid var(--border-default);
+  background: var(--gray-11);
+}
+.adm-memories__meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 10px;
+  margin: 0;
+}
+.adm-memories__meta dt {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--text-secondary);
+}
+.adm-memories__meta dd {
+  margin: 2px 0 0;
+  font-size: 13px;
+  font-weight: 600;
+}

@@ -1,0 +1,3 @@
+.adm-pairs__pending td:first-child {
+  border-left: 3px solid var(--gf-flame);
+}

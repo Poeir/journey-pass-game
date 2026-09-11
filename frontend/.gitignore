@@ -1,0 +1,11 @@
+node_modules
+dist
+dist-ssr
+*.local
+.env
+.env.local
+.vite
+.DS_Store
+.design-bundle
+.image-optimizer-cache/
+.lighthouseci/

@@ -1,0 +1,292 @@
+/* AdminShell — sidebar nav (left, fixed to viewport) and content area scroll
+   independently. Tokens only. */
+
+/* Break out of the global #root "phone column" frame from styles/global.css.
+   Don't put `overflow: auto` on body — it creates a nested scroll container
+   that breaks sticky/fixed positioning relative to the real viewport. */
+html.admin-fullscreen {
+  background: var(--bg-app);
+}
+html.admin-fullscreen body {
+  background: var(--bg-app);
+  padding: 0 !important;
+  height: auto;
+  min-height: 100dvh;
+}
+html.admin-fullscreen #root {
+  max-width: none !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 100dvh;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+  background: var(--bg-app);
+}
+
+.admin-shell {
+  min-height: 100vh;
+  background: var(--bg-app);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+}
+
+/* ---------- Sidebar ----------
+   Pinned to the viewport with `position: fixed` so it stays put no matter how
+   long the page content is. The main column simply offsets by 240px. */
+.admin-shell__nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 240px;
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  color: var(--gray-2);
+  border-right: 1px solid var(--border-default);
+  overflow-y: auto;
+  z-index: 10;
+}
+
+.admin-shell__brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 22px 18px;
+  border-bottom: 1px solid var(--border-default);
+  flex-shrink: 0;
+}
+.admin-shell__brand-mark {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--gf-flame-gradient);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+  flex-shrink: 0;
+}
+.admin-shell__brand-title {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--gray-1);
+}
+.admin-shell__brand-sub {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  margin-top: 2px;
+}
+
+.admin-shell__nav-list {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 12px;
+  gap: 2px;
+  flex: 1;
+}
+.admin-shell__nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: var(--r-md);
+  color: var(--gray-3);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+.admin-shell__nav-item:hover {
+  background: var(--gray-11);
+  color: var(--gray-1);
+}
+.admin-shell__nav-item--active {
+  background: var(--gf-seashell);
+  color: var(--gf-deep-flame);
+  font-weight: 600;
+}
+.admin-shell__nav-item--active:hover { background: var(--gf-seashell); }
+.admin-shell__nav-icon {
+  display: inline-flex;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: currentColor;
+}
+
+.admin-shell__nav-section {
+  margin: 16px 12px 4px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-default);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--gray-5);
+}
+.admin-shell__nav-item--external {
+  color: var(--gray-4);
+}
+.admin-shell__nav-external {
+  margin-left: auto;
+  font-size: 14px;
+  color: var(--gray-5);
+  flex-shrink: 0;
+}
+
+.admin-shell__nav-foot {
+  padding: 12px;
+  border-top: 1px solid var(--border-default);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.admin-shell__user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  background: var(--gray-11);
+  border-radius: var(--r-md);
+}
+.admin-shell__user-avatar {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--gray-1);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+.admin-shell__user-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.admin-shell__user-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gray-1);
+  line-height: 1.2;
+}
+.admin-shell__user-email {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.admin-shell__warn {
+  background: var(--salesbear-cornmilk);
+  color: var(--gray-2);
+  border: 1px solid #f3e6a8;
+  padding: 8px 10px;
+  border-radius: var(--r-md);
+  font-size: 11px;
+  line-height: 1.4;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.admin-shell__warn strong { font-size: 11px; font-weight: 700; color: var(--gray-1); }
+
+.admin-shell__logout {
+  height: 34px;
+  border: 1px solid var(--border-default);
+  background: #fff;
+  color: var(--gray-2);
+  border-radius: var(--r-md);
+  font-size: 12px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.12s ease, color 0.12s ease, border-color 0.12s ease;
+}
+.admin-shell__logout:hover {
+  background: var(--gray-11);
+  color: var(--gray-1);
+}
+.admin-shell__logout:active { background: var(--gray-10); }
+
+/* ---------- Content area ---------- */
+.admin-shell__main {
+  margin-left: 240px;
+  background: var(--bg-app);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-shell__content {
+  padding: 32px 32px 56px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.admin-shell__loading {
+  padding: 64px;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+/* Mobile menu trigger — only visible < 880px, floating control at top-left
+   of content area. */
+.admin-shell__menu-btn {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-default);
+  border-radius: var(--r-md);
+  background: #fff;
+  cursor: pointer;
+  margin: 16px 16px 0;
+  box-shadow: var(--sh-sm);
+}
+.admin-shell__menu-bar {
+  width: 16px;
+  height: 2px;
+  background: var(--gray-2);
+  border-radius: 1px;
+}
+
+.admin-shell__nav-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: var(--bg-overlay);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  z-index: 9;
+}
+
+@media (max-width: 880px) {
+  .admin-shell__nav {
+    transform: translateX(-100%);
+    transition: transform 0.2s ease;
+    box-shadow: var(--sh-md);
+    width: 260px;
+  }
+  .admin-shell__nav--open { transform: translateX(0); }
+  .admin-shell__nav-backdrop { display: block; }
+  .admin-shell__menu-btn { display: inline-flex; }
+  .admin-shell__main { margin-left: 0; }
+  .admin-shell__content { padding: 16px 16px 32px; }
+}

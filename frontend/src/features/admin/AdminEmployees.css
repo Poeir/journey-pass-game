@@ -1,0 +1,27 @@
+.adm-employees__clue { max-width: 240px; }
+.adm-employees__check {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.adm-employees__drop {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--r-md);
+  padding: 36px 16px;
+  background: var(--gray-11);
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--text-secondary);
+  text-align: center;
+}
+.adm-employees__drop:hover {
+  background: #fff;
+  border-color: var(--border-focus);
+}
+.adm-employees__drop input { display: none; }

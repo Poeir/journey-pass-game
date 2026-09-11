@@ -1,0 +1,78 @@
+.tintro--shuffle { background: var(--gf-seashell); }
+
+.tintro > .passport-btn,
+.tintro > .btn {
+  position: sticky;
+  bottom: calc(8px + env(safe-area-inset-bottom));
+  z-index: 5;
+}
+
+.tintro__deck {
+  position: relative;
+  margin: 20px auto 0;
+  width: 170px;
+  height: 220px;
+}
+.tintro__card {
+  position: absolute;
+  inset: 0;
+  padding: 10px;
+  transform: rotate(var(--r, 0deg)) translate(0, var(--ty, 0));
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+.tintro--shuffle .tintro__card:nth-child(1) {
+  animation: tintro-shuffle-1 1.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.tintro--shuffle .tintro__card:nth-child(2) {
+  animation: tintro-shuffle-2 1.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: 90ms;
+}
+.tintro--shuffle .tintro__card:nth-child(3) {
+  animation: tintro-shuffle-3 1.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: 180ms;
+}
+.tintro--shuffle .tintro__card:nth-child(4) {
+  animation: tintro-shuffle-4 1.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: 270ms;
+}
+
+@keyframes tintro-shuffle-1 {
+  0%   { transform: rotate(var(--r, 0deg)) translate(0, var(--ty, 0)); }
+  30%  { transform: rotate(-32deg) translate(-95px, -45px) scale(1.06); }
+  60%  { transform: rotate(45deg) translate(60px, 70px); }
+  85%  { transform: rotate(-10deg) translate(-15px, 8px); }
+  100% { transform: rotate(var(--r, 0deg)) translate(0, var(--ty, 0)); }
+}
+@keyframes tintro-shuffle-2 {
+  0%   { transform: rotate(var(--r, 0deg)) translate(0, var(--ty, 0)); }
+  30%  { transform: rotate(38deg) translate(90px, 35px) scale(1.06); }
+  60%  { transform: rotate(-25deg) translate(-70px, -55px); }
+  85%  { transform: rotate(15deg) translate(20px, -10px); }
+  100% { transform: rotate(var(--r, 0deg)) translate(0, var(--ty, 0)); }
+}
+@keyframes tintro-shuffle-3 {
+  0%   { transform: rotate(var(--r, 0deg)) translate(0, var(--ty, 0)); }
+  30%  { transform: rotate(-18deg) translate(80px, -60px) scale(1.06); }
+  60%  { transform: rotate(50deg) translate(-80px, 45px); }
+  85%  { transform: rotate(-8deg) translate(10px, 12px); }
+  100% { transform: rotate(var(--r, 0deg)) translate(0, var(--ty, 0)); }
+}
+@keyframes tintro-shuffle-4 {
+  0%   { transform: rotate(var(--r, 0deg)) translate(0, var(--ty, 0)); }
+  30%  { transform: rotate(22deg) translate(-85px, 55px) scale(1.06); }
+  60%  { transform: rotate(-40deg) translate(85px, -35px); }
+  85%  { transform: rotate(12deg) translate(-18px, -8px); }
+  100% { transform: rotate(var(--r, 0deg)) translate(0, var(--ty, 0)); }
+}
+.tintro__card-tag {
+  font-size: 11px;
+  color: var(--gray-4);
+}
+.tintro__card-qm {
+  position: absolute;
+  bottom: 12px;
+  right: 10px;
+  font-size: 20px;
+  color: var(--gf-flame);
+}

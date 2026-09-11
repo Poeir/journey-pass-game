@@ -1,0 +1,30 @@
+.intro-shell {
+  flex: 1;
+  padding: 20px var(--page-pad-x) 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: background 0.3s ease;
+  animation: page-in 0.3s ease both;
+}
+.intro-shell__illustration {
+  display: flex;
+  justify-content: center;
+}
+.intro-shell__copy {
+  font-size: 14px;
+  color: var(--gray-3);
+  text-align: center;
+  margin-top: 16px;
+  line-height: 1.55;
+}
+.intro-shell__spacer {
+  flex: 1;
+  min-height: 16px;
+}
+.intro-shell__cta-inner {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}

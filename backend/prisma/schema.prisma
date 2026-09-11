@@ -1,0 +1,258 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ScanOutcome {
+  MATCH
+  MISMATCH
+}
+
+enum MissionMode {
+  TRIVIA
+  TEAMMATE
+}
+
+enum MemoryContext {
+  TRIVIA
+  TEAMMATE
+  PENALTY
+}
+
+model Employee {
+  id           String   @id
+  email        String?  @unique
+  name         String
+  nickname     String?
+  position     String?
+  dept         String
+  year         Int
+  isLeader     Boolean  @default(false)
+  leaderClue   String?
+  photoUrl     String?
+  createdAt    DateTime @default(now())
+
+  scansAsScanner        Scan[]           @relation("scanner")
+  scansAsTarget         Scan[]           @relation("target")
+  triviaCardsAsTarget   TriviaCard[]     @relation("TriviaCardTargets")
+  progress              PlayerProgress?
+  memoryPhotosUploaded  MemoryPhoto[]    @relation("memoryUploader")
+  memoryPhotosWith      MemoryPhoto[]    @relation("memoryCounterpart")
+  pairsAsHunter         Pair[]           @relation("pairHunter")
+  pairsAsTarget         Pair[]           @relation("pairTarget")
+  triviaStampsAsTarget  TriviaStamp[]    @relation("triviaStampTarget")
+  teammateSlotsAsMember TeammateSlot[]   @relation("teammateSlotMember")
+  ledByPlayers          PlayerProgress[] @relation("PlayerAssignedLeader")
+  chatAnswersGiven      ChatAnswer[]     @relation("chatAnswerer")
+}
+
+model TriviaCard {
+  id      String     @id
+  clue    String
+  targets Employee[] @relation("TriviaCardTargets")
+
+  stamps      TriviaStamp[]
+  assignments PlayerCardAssignment[]
+  scans       Scan[]
+
+  @@map("TriviaCard")
+}
+
+model Scan {
+  id        String      @id @default(cuid())
+  scannerId String
+  scanner   Employee    @relation("scanner", fields: [scannerId], references: [id])
+  scannedId String
+  target    Employee    @relation("target", fields: [scannedId], references: [id])
+  cardRef   String?
+  card      TriviaCard? @relation(fields: [cardRef], references: [id], onDelete: SetNull)
+  mode      MissionMode
+  outcome   ScanOutcome
+  pairId    String?
+  pair      Pair?       @relation(fields: [pairId], references: [id], onDelete: SetNull)
+  createdAt DateTime    @default(now())
+
+  @@index([scannerId, createdAt])
+  @@index([pairId])
+  @@index([cardRef])
+}
+
+model Pair {
+  id        String      @id
+  kind      MissionMode
+  hunterId  String
+  hunter    Employee    @relation("pairHunter", fields: [hunterId], references: [id])
+  targetId  String
+  target    Employee    @relation("pairTarget", fields: [targetId], references: [id])
+  createdAt DateTime    @default(now())
+
+  scans         Scan[]
+  // TEAMMATE-only: written by POST /chat/:pairId/confirm-teammate. Each side
+  // (hunter + target) records their own answer + adds their own slot, so this
+  // is 1:N on (pairId, answererId), not 1:1 anymore.
+  chatAnswers   ChatAnswer[]
+  // TRIVIA-only: created on each new mismatch round; carries penalty +
+  // confirmation state (proof photo, targetConfirmed flag).
+  triviaPenalty TriviaPenalty?
+
+  @@index([hunterId, kind, createdAt(sort: Desc)])
+  @@index([targetId, kind, createdAt(sort: Desc)])
+}
+
+// TRIVIA-only side-table for Pair: penalty assignment + the target's
+// confirmation state. Splitting these fields off Pair keeps teammate pairs
+// free of nullable penalty columns and mirrors the existing 1:1 relationship
+// between Pair and ChatAnswer on the teammate side.
+//
+// Lifecycle:
+//   - processScan trivia mismatch upserts this row whenever a new round
+//     starts (no existing pair / prior round confirmed / direction flipped).
+//   - POST /penalty/:pairId/confirm sets targetConfirmed=true + proofPhotoUrl.
+//   - The teammate branch never touches this table.
+model TriviaPenalty {
+  pairId          String   @id
+  pair            Pair     @relation(fields: [pairId], references: [id], onDelete: Cascade)
+  // Nullable so an empty Penalty pool (or admin deleting a penalty
+  // mid-event) doesn't crash the mismatch path — the row still tracks the
+  // round's confirmation state, the FailPenaltyPage just renders no text.
+  penaltyId       String?
+  penalty         Penalty? @relation(fields: [penaltyId], references: [id], onDelete: SetNull)
+  targetConfirmed Boolean  @default(false)
+  proofPhotoUrl   String?
+
+  @@index([targetConfirmed])
+  @@index([penaltyId])
+}
+
+model MemoryPhoto {
+  id            String        @id @default(cuid())
+  url           String
+  uploaderId    String
+  uploader      Employee      @relation("memoryUploader", fields: [uploaderId], references: [id])
+  counterpartId String
+  counterpart   Employee      @relation("memoryCounterpart", fields: [counterpartId], references: [id])
+  contextKind   MemoryContext
+  contextId     String
+  createdAt     DateTime      @default(now())
+
+  @@index([uploaderId, createdAt])
+  @@index([createdAt(sort: Desc)])
+}
+
+model PlayerProgress {
+  playerId         String    @id
+  player           Employee  @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  assignedLeaderId String?
+  assignedLeader   Employee? @relation("PlayerAssignedLeader", fields: [assignedLeaderId], references: [id], onDelete: SetNull)
+  completedAt      DateTime?
+  updatedAt        DateTime  @updatedAt
+
+  triviaStamps  TriviaStamp[]
+  teammateSlots TeammateSlot[]
+  assignedCards PlayerCardAssignment[]
+
+  @@index([completedAt])
+}
+
+// Replaces the old PlayerProgress.triviaStamps JSON map.
+// One row per (player, card) pair; targetId is the employee the player matched
+// for that card. The (playerId, cardId) PK lets concurrent matches on
+// different cards run without serializing on the player.
+model TriviaStamp {
+  playerId  String
+  player    PlayerProgress @relation(fields: [playerId], references: [playerId], onDelete: Cascade)
+  cardId    String
+  card      TriviaCard     @relation(fields: [cardId], references: [id], onDelete: Cascade)
+  targetId  String
+  target    Employee       @relation("triviaStampTarget", fields: [targetId], references: [id])
+  createdAt DateTime       @default(now())
+
+  @@id([playerId, cardId])
+  @@index([targetId])
+}
+
+// Replaces the old PlayerProgress.teammateSlots JSON array.
+// Cap (5 non-leaders + 1 optional leader) is still enforced in code via an
+// advisory lock — DB only enforces uniqueness of a (player, member) pair.
+model TeammateSlot {
+  playerId  String
+  player    PlayerProgress @relation(fields: [playerId], references: [playerId], onDelete: Cascade)
+  memberId  String
+  member    Employee       @relation("teammateSlotMember", fields: [memberId], references: [id])
+  createdAt DateTime       @default(now())
+
+  @@id([playerId, memberId])
+  @@index([playerId, createdAt])
+}
+
+// Replaces the old PlayerProgress.assignedCardIds JSON array.
+// `position` preserves the original shuffle order so /missions/trivia/start
+// returns the same 5 cards in the same order on subsequent calls.
+model PlayerCardAssignment {
+  playerId String
+  player   PlayerProgress @relation(fields: [playerId], references: [playerId], onDelete: Cascade)
+  cardId   String
+  card     TriviaCard     @relation(fields: [cardId], references: [id], onDelete: Cascade)
+  position Int
+
+  @@id([playerId, cardId])
+  @@index([playerId, position])
+}
+
+// The fixed list of "get to know each other" prompts. Moved out of the
+// hardcoded array in domain/chatQuestions.ts so admins can edit them and
+// answers can carry an FK instead of a snapshot string. `index` is what
+// pickQuestionForPair hashes against — it must stay stable, since changing
+// the index would re-route an in-flight pair to a different question.
+model ChatQuestion {
+  id       String       @id @default(cuid())
+  index    Int          @unique
+  question String
+
+  answers  ChatAnswer[]
+}
+
+// The pool of penalty texts shown to the hunter on FailPenaltyPage.
+// Moved out of the frontend's hardcoded PENALTIES array so admins can
+// add/edit/remove without a deploy. processScan picks one at random when a
+// trivia mismatch creates / refreshes a Pair; the chosen id is stored on
+// `Pair.penaltyId` so both sides see the same penalty across reloads.
+model Penalty {
+  id   String @id
+  text String
+
+  triviaPenalties TriviaPenalty[]
+}
+
+// Pool of photo-spot suggestions shown on SuccessPage right before the memory
+// upload. Moved out of the frontend's i18n photoPlaces array so admins can
+// edit them without redeploy. The frontend picks one at random per render;
+// nothing references PhotoPlace.id, so deletes are safe and don't cascade.
+model PhotoPlace {
+  id   String @id
+  text String
+}
+
+// What each side of a teammate pair typed as the chat-confirm answer for the
+// pair's question. Composite PK (pairId, answererId): both hunter and target
+// answer independently in the mutual-add flow — each side's answer commits
+// their own teammate slot.
+model ChatAnswer {
+  pairId     String
+  pair       Pair         @relation(fields: [pairId], references: [id], onDelete: Cascade)
+  questionId String
+  question   ChatQuestion @relation(fields: [questionId], references: [id])
+  answer     String
+  answererId String
+  answerer   Employee     @relation("chatAnswerer", fields: [answererId], references: [id])
+  createdAt  DateTime     @default(now())
+
+  @@id([pairId, answererId])
+  @@index([answererId, createdAt])
+  @@index([questionId])
+}

@@ -1,0 +1,77 @@
+/* Design tokens — lifted from colors_and_type.css
+   Production tokens; used throughout the app. Custom brand typeface
+   removed for the portfolio copy (licensed asset); falls back to
+   Plus Jakarta Sans / system fonts. */
+
+:root {
+  --font-sans: "Plus Jakarta Sans", "Sukhumvit Set",
+               "Noto Sans Thai", "Inter", system-ui, -apple-system, sans-serif;
+  --font-hand: "Caveat", "Kalam", "Patrick Hand", var(--font-sans);
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  --gf-flame-gradient: linear-gradient(135deg, #F8841F 0%, #F05B2F 100%);
+  --gf-flame-gradient-vertical: linear-gradient(180deg, #F88B1F 0%, #F86715 100%);
+  --gf-deep-flame: #E54111;
+  --gf-flame: #F05B2F;
+  --gf-light-flame: #F26C44;
+  --gf-peach: #F48565;
+  --gf-peach-puff: #FFE1CC;
+  --gf-seashell: #FFF3EC;
+
+  --venio-bluetiful: #116DFC;
+  --venio-zircon: #E7F0FF;
+  --salesbear-cornmilk: #FFF8E0;
+  --salesbear-sunglow: #FFC505;
+  --success: #21CE9B;
+  --validation: #DE3A45;
+  --notification: #F02848;
+
+  --gray-1: #1C1C22;
+  --gray-2: #383842;
+  --gray-3: #525260;
+  --gray-4: #6A6A7C;
+  --gray-5: #838395;
+  --gray-6: #A5A5B6;
+  --gray-7: #BCBCC8;
+  --gray-8: #D2D2DA;
+  --gray-9: #DFDFE8;
+  --gray-10: #ECECF1;
+  --gray-11: #F6F6F8;
+  --gray-12: #FFFFFF;
+
+  --bg-app: #F6F6F8;
+  --bg-surface: #FFFFFF;
+  --bg-muted: #FFF3EC;
+  --bg-overlay: rgba(28, 28, 34, 0.48);
+
+  --text-primary: var(--gray-1);
+  --text-secondary: var(--gray-4);
+  --text-tertiary: var(--gray-6);
+  --text-disabled: var(--gray-7);
+  --text-inverse: #FFFFFF;
+
+  --border-default: var(--gray-10);
+  --border-strong: var(--gray-8);
+  --border-focus: var(--gf-flame);
+
+  --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px;
+  --sp-5: 20px; --sp-6: 24px; --sp-8: 32px; --sp-11: 44px; --sp-16: 64px;
+
+  --r-xs: 4px; --r-sm: 6px; --r-md: 8px;
+  --r-lg: 12px; --r-xl: 16px; --r-pill: 999px;
+
+  --sh-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --sh-md: 0 4px 12px rgba(0, 0, 0, 0.10);
+  --sh-lg: 0 12px 32px rgba(0, 0, 0, 0.12);
+  --sh-focus: 0 0 0 3px rgba(240, 91, 47, 0.24);
+
+  --fz-h1: 36px; --lh-h1: 44px;
+  --fz-h2: 26px; --lh-h2: 36px;
+  --fz-h3: 24px; --lh-h3: 32px;
+  --fz-h4: 20px; --lh-h4: 28px;
+  --fz-h5: 18px; --lh-h5: 26px;
+  --fz-title: 16px; --lh-title: 24px;
+  --fz-body: 14px; --lh-body: 20px;
+  --fz-small: 12px; --lh-small: 18px;
+  --fz-xs: 10px; --lh-xs: 14px;
+}

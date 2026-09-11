@@ -1,0 +1,415 @@
+/* Break out of the global #root mobile-phone frame for the projector wall. */
+html.wall-fullscreen,
+html.wall-fullscreen body {
+  background: var(--gf-seashell);
+  padding: 0 !important;
+  height: 100dvh;
+  overflow: hidden;
+}
+html.wall-fullscreen #root {
+  max-width: none !important;
+  width: 100vw !important;
+  height: 100dvh !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  overflow: hidden !important;
+}
+
+.wall {
+  position: relative;
+  width: 100%;
+  height: 100dvh;
+  overflow: hidden;
+  background-color: var(--gf-seashell);
+  background-image: url("../../../assets/memory-back-ground.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.wall__head {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  text-align: center;
+  padding: 16px 16px 22px;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(255, 243, 236, 0.92) 0%, rgba(255, 243, 236, 0.4) 70%, transparent 100%);
+}
+
+.wall__title {
+  font-size: clamp(28px, 4.2vw, 64px);
+  line-height: 1;
+  color: var(--gf-deep-flame);
+  letter-spacing: 0.02em;
+}
+
+.wall__sub {
+  font-size: clamp(14px, 1.4vw, 22px);
+  color: var(--gray-3);
+  margin-top: 4px;
+}
+
+.wall__empty {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: clamp(20px, 2.2vw, 32px);
+  color: var(--gray-5);
+  pointer-events: none;
+  z-index: 50;
+}
+
+.wall__viewport {
+  position: absolute;
+  inset: 0;
+  overflow: auto;
+  cursor: grab;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  touch-action: pan-x pan-y;
+  display: flex;
+  align-items: safe center;
+  justify-content: safe center;
+  padding: 80px 32px 80px;
+}
+.wall__viewport.wall--grabbing {
+  cursor: grabbing;
+}
+
+/* Frosted-glass backdrop shown during the slideshow. Sits above the viewport
+   (so the photo grid AND the page background blur together), but below the
+   popup, controls, and header — those stay crisp. No darkening tint. */
+.wall__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  backdrop-filter: blur(14px) saturate(1.05);
+  -webkit-backdrop-filter: blur(14px) saturate(1.05);
+  background: rgba(255, 255, 255, 0.05);
+  opacity: 0;
+  transition: opacity 350ms ease;
+}
+.wall__backdrop--on {
+  opacity: 1;
+}
+
+.wall__sizer {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.wall__canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 0 0;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.wall-card {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 8px 8px 22px;
+  background: #fff;
+  box-shadow: var(--sh-md);
+  cursor: pointer;
+  transform: translate(-50%, -50%) rotate(var(--rot, 0deg));
+  transform-origin: center;
+  animation: wallAppear 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  transition: filter 200ms ease, box-shadow 200ms ease, z-index 0s;
+  /* Skip paint of figures scrolled outside the spiral viewport. */
+  content-visibility: auto;
+  contain-intrinsic-size: 180px 220px;
+}
+
+.wall-card img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+
+.wall-card--penalty::after {
+  content: "";
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gf-flame);
+  box-shadow: 0 0 0 2px #fff;
+  z-index: 2;
+}
+
+@media (hover: hover) {
+  .wall-card:hover,
+  .wall-card.wall-card--active {
+    filter: brightness(1.08);
+  }
+}
+
+.wall-card.wall-card--active {
+  box-shadow: var(--sh-lg);
+}
+
+@media (hover: hover) {
+  .wall-card:hover {
+    box-shadow: var(--sh-lg);
+  }
+}
+
+/* Floating popup near the hovered tile (no full-screen backdrop) */
+.wall__popup {
+  position: fixed;
+  z-index: 250;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  width: clamp(260px, 32vw, 460px);
+  animation: popupZoom 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.wall__popup img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 70vh;
+  object-fit: contain;
+  background: #fff;
+  border: 8px solid #fff;
+  border-radius: 4px;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.35);
+}
+
+/* Slideshow carousel — photos roll edge-to-edge across the whole screen.
+   Two photo layers occupy the same grid cell so the wrapper doesn't shift,
+   but the wrapper does NOT clip — each photo escapes its bounds and travels
+   the full viewport width on entry / exit. */
+.wall__popup--slide {
+  display: grid;
+  animation: none;
+}
+.wall__popup--slide > img {
+  grid-row: 1;
+  grid-column: 1;
+  will-change: transform;
+}
+.wall__popup-img--in {
+  animation: slideInFromRight 1s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+.wall__popup-img--out {
+  animation: slideOutToLeft 1s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+/* Zoom controls */
+.wall__zoom {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 150;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: var(--r-pill);
+  padding: 6px;
+  box-shadow: var(--sh-md);
+}
+
+/* Slide controls (prev/next one photo at a time) */
+.wall__slide {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 150;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: var(--r-pill);
+  padding: 6px;
+  box-shadow: var(--sh-md);
+}
+
+.wall__slide-btn {
+  border: none;
+  background: transparent;
+  font: inherit;
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--gray-2);
+  border-radius: var(--r-pill);
+  padding: 4px 16px;
+  min-width: 40px;
+  cursor: pointer;
+  transition: background 150ms ease, opacity 150ms ease;
+}
+
+.wall__slide-btn:hover:not(:disabled) {
+  background: var(--gray-10);
+}
+
+.wall__slide-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.wall__slide-play {
+  border: none;
+  background: transparent;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--gray-2);
+  border-radius: var(--r-pill);
+  padding: 8px 12px;
+  min-width: 44px;
+  cursor: pointer;
+  transition: background 150ms ease, color 150ms ease, transform 150ms ease;
+}
+
+.wall__slide-play:hover:not(:disabled) {
+  background: var(--gray-10);
+}
+
+.wall__slide-play:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.wall__slide-play--on {
+  background: var(--gf-flame);
+  color: #fff;
+}
+
+.wall__slide-play--on:hover:not(:disabled) {
+  background: var(--gf-deep-flame);
+}
+
+.wall__slide-speed {
+  border: none;
+  background: transparent;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gray-2);
+  border-radius: var(--r-pill);
+  padding: 8px 10px;
+  min-width: 44px;
+  cursor: pointer;
+  font-variant-numeric: tabular-nums;
+  transition: background 150ms ease, opacity 150ms ease;
+}
+
+.wall__slide-speed:hover:not(:disabled) {
+  background: var(--gray-10);
+}
+
+.wall__slide-speed:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.wall__slide-count {
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gray-2);
+  min-width: 64px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  padding: 0 6px;
+}
+
+.wall__zoom-btn,
+.wall__zoom-pct {
+  border: none;
+  background: transparent;
+  font: inherit;
+  font-weight: 600;
+  color: var(--gray-2);
+  border-radius: var(--r-pill);
+  padding: 8px 12px;
+  min-width: 36px;
+  cursor: pointer;
+  transition: background 150ms ease;
+}
+
+.wall__zoom-btn {
+  font-size: 22px;
+  line-height: 1;
+  padding: 6px 14px;
+}
+
+.wall__zoom-pct {
+  font-size: 13px;
+  min-width: 56px;
+  font-variant-numeric: tabular-nums;
+}
+
+.wall__zoom-btn:hover,
+.wall__zoom-pct:hover {
+  background: var(--gray-10);
+}
+
+@media (max-width: 720px) {
+  .wall__head {
+    padding: 12px 14px 16px;
+  }
+  .wall__viewport {
+    padding: 60px 12px 60px;
+  }
+  .wall__zoom {
+    bottom: 12px;
+    right: 12px;
+  }
+  .wall__slide {
+    bottom: 12px;
+  }
+}
+
+@keyframes wallAppear {
+  from { opacity: 0; transform: translate(-50%, -50%) rotate(var(--rot, 0deg)) scale(0.6); }
+  to   { opacity: 1; transform: translate(-50%, -50%) rotate(var(--rot, 0deg)) scale(1); }
+}
+
+@keyframes popupZoom {
+  from { opacity: 0; transform: translate(-50%, -50%) scale(0.7); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(100vw);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOutToLeft {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100vw);
+  }
+}

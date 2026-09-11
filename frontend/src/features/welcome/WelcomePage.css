@@ -1,0 +1,541 @@
+/* ── Page shell ── */
+.welcome-pass {
+  position: relative;
+  flex: 1;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 22px var(--page-pad-x)
+    calc(16px + env(safe-area-inset-bottom));
+  overflow-x: hidden;
+  overflow-y: auto;
+  isolation: isolate;
+  opacity: 0;
+  animation: welcome-fade-in 0.45s ease forwards;
+}
+
+@keyframes welcome-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.welcome-pass__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
+.welcome-pass > *:not(.welcome-pass__bg) {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Header ── */
+.welcome-pass__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.welcome-pass__brand {
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: var(--gray-1);
+}
+
+.welcome-pass__header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── Login error banner (shown when redirected back with ?error=… or ?expired=1) ── */
+.welcome-pass__error {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: #FFECEE;
+  border: 1.5px solid var(--validation, #DE3A45);
+  border-radius: var(--r-md, 10px);
+  box-shadow: 2px 2px 0 rgba(222, 58, 69, 0.18);
+  animation: slide-up 0.35s ease both;
+}
+.welcome-pass__error-text {
+  flex: 1;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--validation, #DE3A45);
+}
+.welcome-pass__error-close {
+  appearance: none;
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  line-height: 1;
+  color: var(--validation, #DE3A45);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.welcome-pass__badge {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 32px;
+}
+
+.welcome-pass__badge img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  pointer-events: none;
+}
+
+.welcome-pass__badge-text {
+  position: relative;
+  font-size: 14px;
+  letter-spacing: 1px;
+  color: #fff;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+}
+
+/* ── Invitation card ── */
+.welcome-pass__card {
+  position: relative;
+  width: 100%;
+  max-width: 340px;
+  margin: auto auto 0;
+  animation: invite-in 0.6s cubic-bezier(0.2, 0.9, 0.3, 1) both;
+}
+
+.welcome-pass__card-frame {
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+}
+
+.welcome-pass__card-body {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 18% 12% 14%;
+  gap: 6px;
+}
+
+/* ── Ribbon ── */
+.welcome-pass__ribbon {
+  position: absolute;
+  top: 6%;
+  left: 50%;
+  width: 82%;
+  transform: translateX(-50%);
+  z-index: 2;
+  animation: ribbon-in 0.55s 0.25s cubic-bezier(0.2, 0.9, 0.3, 1) both;
+}
+
+.welcome-pass__ribbon img {
+  display: block;
+  width: 100%;
+  height: auto;
+  user-select: none;
+  pointer-events: none;
+}
+
+.welcome-pass__ribbon-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: #fff;
+  white-space: nowrap;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+}
+
+/* ── Title ── */
+.welcome-pass__title {
+  margin: 4% 0 2%;
+  font-size: 44px;
+  line-height: 1;
+  text-align: center;
+  background: linear-gradient(135deg, var(--gf-flame), #d6451f);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* ── Body copy ── */
+.welcome-pass__lede {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--gray-2);
+}
+.welcome-pass__lede strong {
+  color: var(--gf-flame);
+}
+
+.welcome-pass__call {
+  margin: 4px 0 0;
+  font-size: 12px;
+  line-height: 1.6;
+  font-style: italic;
+  color: var(--gray-2);
+}
+
+/* ── Wax seal ── */
+.welcome-pass__seal {
+  position: relative;
+  margin-top: 14px;
+  width: 110px;
+  height: 110px;
+  animation: seal-stamp 0.7s 0.5s cubic-bezier(0.2, 1.4, 0.4, 1) both;
+}
+
+.welcome-pass__seal img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  pointer-events: none;
+}
+
+.welcome-pass__seal-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  letter-spacing: 3px;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+/* ── Mascot speech ── */
+.welcome-pass__mascot {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  margin: -8px auto 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  animation: slide-up 0.35s 0.5s cubic-bezier(0.2, 0.9, 0.3, 1) both;
+}
+
+.welcome-pass__mascot-img {
+  width: 96px;
+  height: auto;
+  flex-shrink: 0;
+  user-select: none;
+  pointer-events: none;
+  filter: drop-shadow(0 6px 10px rgba(229, 65, 17, 0.18));
+  animation: mascot-bob 2.8s ease-in-out infinite;
+}
+
+.welcome-pass__mascot-bubble {
+  position: relative;
+  flex: 1;
+  max-width: 100%;
+  padding: 12px 14px;
+  background: var(--gf-seashell);
+  border: 1.5px solid var(--gf-flame);
+  border-radius: 14px;
+  box-shadow: 2px 2px 0 rgba(229, 65, 17, 0.16);
+}
+
+/* Tail pointing left toward the mascot */
+.welcome-pass__mascot-bubble::before,
+.welcome-pass__mascot-bubble::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  transform: translateY(-50%);
+}
+.welcome-pass__mascot-bubble::before {
+  left: -11px;
+  border-width: 9px 11px 9px 0;
+  border-color: transparent var(--gf-flame) transparent transparent;
+}
+.welcome-pass__mascot-bubble::after {
+  left: -8px;
+  border-width: 7px 9px 7px 0;
+  border-color: transparent var(--gf-seashell) transparent transparent;
+}
+
+.welcome-pass__mascot-text {
+  display: block;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.3;
+  color: var(--gf-deep-flame);
+  text-align: left;
+}
+
+@keyframes mascot-bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-5px); }
+}
+
+/* ── CTA layout (visuals come from PassportButton) ── */
+.welcome-pass__cta {
+  margin-top: auto;
+  position: sticky;
+  bottom: calc(16px + env(safe-area-inset-bottom));
+  z-index: 3;
+  animation: cta-slide-up 0.4s 0.65s cubic-bezier(0.2, 0.9, 0.3, 1) both;
+}
+
+/* ── Animations ── */
+@keyframes invite-in {
+  0%   { opacity: 0; transform: translateY(24px) scale(0.94); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes ribbon-in {
+  0%   { opacity: 0; transform: translate(-50%, -10px) scale(0.92); }
+  100% { opacity: 1; transform: translate(-50%, 0) scale(1); }
+}
+
+@keyframes seal-stamp {
+  0%   { opacity: 0; transform: rotate(28deg) scale(2.2); }
+  100% { opacity: 1; transform: rotate(-8deg) scale(1); }
+}
+
+@keyframes slide-up {
+  0%   { opacity: 0; transform: translateY(12px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes cta-slide-up {
+  0%   { opacity: 0; transform: translateY(14px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Wider phones ── */
+@media (min-width: 380px) {
+  .welcome-pass__title {
+    font-size: 48px;
+  }
+  .welcome-pass__lede {
+    font-size: 14px;
+  }
+  .welcome-pass__call {
+    font-size: 13px;
+  }
+  .welcome-pass__seal {
+    width: 124px;
+    height: 124px;
+  }
+  .welcome-pass__seal-text {
+    font-size: 18px;
+  }
+}
+
+/* ── Short viewports (compact layout so CTA fits without scroll) ── */
+@media (max-height: 720px) {
+  .welcome-pass {
+    gap: 10px;
+    padding: 14px var(--page-pad-x)
+      calc(12px + env(safe-area-inset-bottom));
+  }
+  .welcome-pass__card {
+    max-width: 300px;
+  }
+  .welcome-pass__card-body {
+    padding: 16% 12% 12%;
+    gap: 4px;
+  }
+  .welcome-pass__title {
+    font-size: 36px;
+  }
+  .welcome-pass__lede {
+    font-size: 12px;
+    line-height: 1.45;
+  }
+  .welcome-pass__call {
+    font-size: 11px;
+    line-height: 1.5;
+  }
+  .welcome-pass__seal {
+    margin-top: 8px;
+    width: 84px;
+    height: 84px;
+  }
+  .welcome-pass__mascot {
+    margin-top: -4px;
+  }
+  .welcome-pass__mascot-img {
+    width: 72px;
+  }
+  .welcome-pass__mascot-text {
+    font-size: 14px;
+  }
+}
+
+/* ── Dev-only login panel (gated by VITE_DEV_LOGIN_ENABLED) ── */
+.welcome-pass__dev {
+  width: 100%;
+  max-width: 420px;
+  margin: 8px auto 0;
+  position: relative;
+  z-index: 4;
+}
+
+.welcome-pass__dev-toggle {
+  appearance: none;
+  width: 100%;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px dashed var(--gray-3, #999);
+  border-radius: 8px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--gray-2);
+  cursor: pointer;
+}
+
+.welcome-pass__dev-body {
+  margin-top: 8px;
+  padding: 12px;
+  background: #fff;
+  border: 1px dashed var(--gray-3, #999);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.welcome-pass__dev-hint {
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--gray-2);
+}
+.welcome-pass__dev-hint code {
+  background: rgba(0, 0, 0, 0.06);
+  padding: 1px 4px;
+  border-radius: 3px;
+  font-size: 10px;
+}
+
+.welcome-pass__dev-search {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 14px;
+  border: 1px solid var(--gray-3, #999);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.welcome-pass__dev-status {
+  margin: 0;
+  font-size: 12px;
+  color: var(--gray-2);
+}
+.welcome-pass__dev-status--err {
+  color: var(--validation, #DE3A45);
+}
+
+.welcome-pass__dev-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 280px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.welcome-pass__dev-row {
+  appearance: none;
+  width: 100%;
+  text-align: left;
+  background: #fafafa;
+  border: 1px solid var(--gray-3, #999);
+  border-radius: 6px;
+  padding: 8px 10px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.welcome-pass__dev-row:hover {
+  background: #f0f0f0;
+}
+.welcome-pass__dev-row:disabled {
+  opacity: 0.5;
+  cursor: progress;
+}
+
+.welcome-pass__dev-row-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gray-1);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.welcome-pass__dev-row-meta {
+  font-size: 11px;
+  color: var(--gray-2);
+  font-family: ui-monospace, SFMono-Regular, monospace;
+}
+
+.welcome-pass__dev-leader {
+  font-size: 9px;
+  letter-spacing: 1px;
+  background: var(--gf-flame);
+  color: #fff;
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .welcome-pass,
+  .welcome-pass__card,
+  .welcome-pass__ribbon,
+  .welcome-pass__seal,
+  .welcome-pass__mascot,
+  .welcome-pass__mascot-img,
+  .welcome-pass__cta {
+    animation: none;
+  }
+}

@@ -1,0 +1,17 @@
+/* ─── Particle background canvas ────────────────────────────────────────────
+   Add this block to MemoryWallPage.css
+   ─────────────────────────────────────────────────────────────────────────── */
+ 
+.wall__particles {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;           /* sits above the bg color, below everything else */
+}
+ 
+/* Ensure existing .wall__head, .wall__viewport, .wall__zoom, .wall__popup
+   all keep z-index higher than 0 — they already do in the original file, so
+   no changes needed there. */
+ 

@@ -1,0 +1,174 @@
+/* ============================================================
+   Design System — Core Tokens
+   Last sync: 26/02/2024 (Figma) · Updated 18/04/2026
+   ============================================================ */
+
+/* ---------- FONTS ------------------------------------------ */
+/* Custom brand typeface removed for the portfolio copy (licensed
+   asset). Falls back to Plus Jakarta Sans / system fonts.
+   For legal / printed docs (payroll, certificates) fall back to
+   TH Sarabun New.
+*/
+
+:root {
+  --font-sans: "Plus Jakarta Sans", "Sukhumvit Set",
+               "Noto Sans Thai", "Inter", system-ui, -apple-system, sans-serif;
+  --font-legal: "TH Sarabun New", "Sarabun", serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+/* ---------- BRAND (master) ---------------------------------- */
+:root {
+  --gf-flame-gradient: linear-gradient(135deg, #F8841F 0%, #F05B2F 100%);
+  --gf-flame-gradient-vertical: linear-gradient(180deg, #F88B1F 0%, #F86715 100%);
+  --gf-deep-flame: #E54111;
+  --gf-flame: #F05B2F;         /* Primary */
+  --gf-light-flame: #F26C44;
+  --gf-peach: #F48565;
+  --gf-peach-puff: #FFE1CC;
+  --gf-seashell: #FFF3EC;      /* Softest tint / hover background */
+}
+
+/* ---------- PRODUCT ACCENTS -------------------------------- */
+:root {
+  /* empeo — HR (uses Flame family + Caribbean greens) */
+  --empeo-primary: #F05B2F;
+  --empeo-apricot: #FD911B;
+  --empeo-ruby: #C81720;
+  --empeo-caribbean: #00C291;
+  --empeo-caribbean-dark: #00A67C;
+  --empeo-caribbean-light: #00CC99;
+  --empeo-caribbean-soft: #CCF3E9;
+  --empeo-sky: #4C97FF;
+  --empeo-indigo: #5E5EED;
+  --empeo-indigo-light: #E9E9FC;
+
+  /* Venio — Sales / CRM */
+  --venio-bluetiful: #116DFC;   /* Primary */
+  --venio-united-blue: #418AFD;
+  --venio-malibu: #70A7FD;
+  --venio-baby-blue: #B8D3FE;
+  --venio-zircon: #E7F0FF;
+  --venio-ghost-white: #F5F9FF;
+  --venio-deal: #E00095;
+  --venio-expense: #3AA8AF;
+  --venio-quotation: #7D2EF0;
+  --venio-active: #3AB186;
+  --venio-sunset-orange: #FA5959;
+  --venio-rose-wine: #DC3970;
+  --venio-french-rose: #F05794;
+  --venio-persimmon: #FF7653;
+  --venio-shamrock: #21CE9B;
+  --venio-cream-can: #F7CA51;
+  --venio-athens-gray: #EBECF0;
+
+  /* Salesbear — Lead capture */
+  --salesbear-sunglow: #FFC505;
+  --salesbear-minion: #FFDC66;
+  --salesbear-blond: #FFEAA3;
+  --salesbear-cornmilk: #FFF8E0;
+  --salesbear-ivory: #FFFDF3;
+
+  /* eTaxGo — E-tax */
+  --etaxgo-crimson: #EB1C26;
+  --etaxgo-tomato: #F96252;
+  --etaxgo-salmon: #FF9281;
+  --etaxgo-bubble-gum: #FFBEB2;
+  --etaxgo-misty-rose: #FFEAE5;
+  --etaxgo-magic-mint: #B9EBD3;
+  --etaxgo-green-apple: #16BC6D;
+  --etaxgo-spanish: #129657;
+  --etaxgo-han-blue: #485CC7;
+}
+
+/* ---------- NEUTRALS (Dark Text on Light BG) --------------- */
+:root {
+  --gray-1-charcoal: #1C1C22;   /* Primary text on light */
+  --gray-2-iron:     #383842;
+  --gray-3-lead:     #525260;
+  --gray-4-anchor:   #6A6A7C;   /* Secondary text */
+  --gray-5-porpoise: #838395;
+  --gray-6-pewter:   #A5A5B6;
+  --gray-7-flint:    #BCBCC8;   /* Placeholder */
+  --gray-8-silver:   #D2D2DA;   /* Disabled borders */
+  --gray-9-smoke:    #DFDFE8;
+  --gray-10-cloud:   #ECECF1;   /* Dividers */
+  --gray-11-soft-cloud: #F6F6F8;/* Surface-2 */
+  --gray-12-white:   #FFFFFF;
+}
+
+/* ---------- SEMANTIC --------------------------------------- */
+:root {
+  --success:       #21CE9B;
+  --validation:    #DE3A45;
+  --system-error:  #3F536B;
+  --notification:  #F02848;
+
+  --bg-app:        #F6F6F8;
+  --bg-surface:    #FFFFFF;
+  --bg-muted:      #FFF3EC;     /* Flame tint hover */
+  --bg-overlay:    rgba(28,28,34,0.48);
+
+  --text-primary:   var(--gray-1-charcoal);
+  --text-secondary: var(--gray-4-anchor);
+  --text-tertiary:  var(--gray-6-pewter);
+  --text-disabled:  var(--gray-7-flint);
+  --text-inverse:   #FFFFFF;
+
+  --border-default: var(--gray-10-cloud);
+  --border-strong:  var(--gray-8-silver);
+  --border-focus:   var(--gf-flame);
+}
+
+/* ---------- TYPE SCALE (from Figma) -------------------------- */
+:root {
+  --fz-h1: 36px;  --lh-h1: 44px;   --fw-h1: 700;
+  --fz-h2: 26px;  --lh-h2: 36px;   --fw-h2: 600;
+  --fz-h3: 24px;  --lh-h3: 32px;   --fw-h3: 600;
+  --fz-h4: 20px;  --lh-h4: 28px;   --fw-h4: 600;
+  --fz-h5: 18px;  --lh-h5: 26px;   --fw-h5: 600;
+
+  --fz-title: 16px;        --lh-title: 24px;
+    --fw-title: 500;   --fw-title-strong: 600;  --fw-title-bold: 700;
+
+  --fz-body: 14px;         --lh-body: 20px;
+    --fw-body: 500;    --fw-body-strong: 600;   --fw-body-bold: 700;
+    --fw-body-text: 300;
+
+  --fz-small: 12px;        --lh-small: 18px;
+    --fw-small: 300;   --fw-small-strong: 600;
+
+  --fz-xs: 10px;           --lh-xs: 14px;       --fw-xs: 300;
+}
+
+/* ---------- SPACING / RADIUS / SHADOW ---------------------- */
+:root {
+  --sp-1: 4px;   --sp-2: 8px;   --sp-3: 12px;  --sp-4: 16px;
+  --sp-5: 20px;  --sp-6: 24px;  --sp-8: 32px;  --sp-11: 44px;
+  --sp-16: 64px;
+
+  --r-xs: 4px;  --r-sm: 6px;  --r-md: 8px;
+  --r-lg: 12px; --r-xl: 16px; --r-pill: 999px;
+
+  --sh-sm: 0 1px 2px rgba(0,0,0,0.06);
+  --sh-md: 0 4px 12px rgba(0,0,0,0.10);
+  --sh-lg: 0 12px 32px rgba(0,0,0,0.12);
+  --sh-focus: 0 0 0 3px rgba(240,91,47,0.24);
+}
+
+/* ---------- TYPE UTILITIES --------------------------------- */
+.t-h1 { font: var(--fw-h1) var(--fz-h1)/var(--lh-h1) var(--font-sans); }
+.t-h2 { font: var(--fw-h2) var(--fz-h2)/var(--lh-h2) var(--font-sans); }
+.t-h3 { font: var(--fw-h3) var(--fz-h3)/var(--lh-h3) var(--font-sans); }
+.t-h4 { font: var(--fw-h4) var(--fz-h4)/var(--lh-h4) var(--font-sans); }
+.t-h5 { font: var(--fw-h5) var(--fz-h5)/var(--lh-h5) var(--font-sans); }
+.t-title        { font: var(--fw-title)/var(--lh-title) var(--font-sans); font-size: var(--fz-title); }
+.t-title-strong { font: var(--fw-title-strong)/var(--lh-title) var(--font-sans); font-size: var(--fz-title); }
+.t-title-bold   { font: var(--fw-title-bold)/var(--lh-title) var(--font-sans); font-size: var(--fz-title); }
+.t-body         { font: var(--fw-body)/var(--lh-body) var(--font-sans); font-size: var(--fz-body); }
+.t-body-strong  { font: var(--fw-body-strong)/var(--lh-body) var(--font-sans); font-size: var(--fz-body); }
+.t-body-bold    { font: var(--fw-body-bold)/var(--lh-body) var(--font-sans); font-size: var(--fz-body); }
+.t-body-text    { font: var(--fw-body-text)/var(--lh-body) var(--font-sans); font-size: var(--fz-body); }
+.t-small        { font: var(--fw-small)/var(--lh-small) var(--font-sans); font-size: var(--fz-small); }
+.t-small-strong { font: var(--fw-small-strong)/var(--lh-small) var(--font-sans); font-size: var(--fz-small); }
+.t-xs           { font: var(--fw-xs)/var(--lh-xs) var(--font-sans); font-size: var(--fz-xs); }

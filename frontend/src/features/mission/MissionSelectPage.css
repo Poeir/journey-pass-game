@@ -1,0 +1,171 @@
+.mission {
+  flex: 1;
+  padding: 4px 4px calc(4px + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  animation: page-in 0.3s ease both;
+}
+.mission__paper {
+  width: 100%;
+  max-width: 505px;
+  margin: 0 auto;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 120px 25px 50px 25px;
+  border-image-source: var(--paper-bg);
+  border-image-slice: 165 35 70 35 fill;
+  border-image-repeat: stretch;
+  padding: 8px 10px 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-sizing: border-box;
+}
+.mission__head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+}
+.mission__hello { font-size: 13px; color: var(--gray-4); margin: 0; }
+.mission__title { font-size: 22px; margin: 0; }
+.mission__desc {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--gray-2);
+  margin: 0;
+  text-align: center;
+  padding: 0 4px;
+}
+.mission__desc strong { color: var(--gf-flame); }
+.mission__card.card {
+  cursor: pointer;
+  transition: transform 0.1s ease;
+  animation: slide-up 0.35s 0.08s cubic-bezier(0.2, 0.9, 0.3, 1) both;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  width: 100%;
+  padding: 6% 7%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 8px;
+}
+.mission__card.card + .mission__card.card {
+  animation-delay: 0.18s;
+}
+.mission__card.card:active { transform: translate(1px, 1px); }
+.mission__card--trivia.card {
+  background-image: var(--mission-card-1);
+  aspect-ratio: 1497 / 674;
+  max-width: 1497px;
+}
+.mission__card--teammate.card {
+  background-image: var(--mission-card-2);
+  aspect-ratio: 3444 / 1452;
+  max-width: 3444px;
+}
+.mission__card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+.mission__card-title {
+  font-size: 18px;
+  color: var(--gf-flame);
+  line-height: 1.1;
+}
+.mission__card-title--blue { color: var(--venio-bluetiful); }
+.mission__card-sub {
+  font-size: 12px;
+  color: var(--gray-3);
+  margin-top: 4px;
+}
+.mission__badge {
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: var(--r-pill);
+}
+.mission__badge--ink { background: var(--gray-1); color: #fff; }
+.mission__stamps {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.mission__stamps .sk-stamp { font-size: 12px; }
+
+.mission__cta-sticky {
+  position: sticky;
+  bottom: 4px;
+  z-index: 5;
+  padding-top: 8px;
+  margin-top: auto;
+}
+
+.mission__stamps-plus {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--gray-3);
+  margin: 0 2px;
+}
+
+.mission__stamp-extra {
+  position: relative;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 1.5px dashed #c98a00;
+  flex-shrink: 0;
+}
+.mission__stamp-extra--filled {
+  background:
+    radial-gradient(circle at 30% 30%, #fff5cf 0%, #ffd54a 55%, #ffae00 100%);
+  border: 1.5px solid #c98a00;
+  box-shadow: 0 2px 6px rgba(180, 110, 0, 0.3);
+}
+.mission__stamp-extra-icon {
+  width: 14px;
+  height: 14px;
+  fill: #c98a00;
+  stroke: #5a3500;
+  stroke-width: 0.6;
+  opacity: 0.5;
+}
+.mission__stamp-extra--filled .mission__stamp-extra-icon {
+  fill: #7a4a00;
+  opacity: 1;
+}
+.mission__stamp-extra-label {
+  position: absolute;
+  bottom: -11px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 7px;
+  font-weight: 700;
+  color: #c98a00;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  background: #fff;
+  padding: 1px 4px;
+  border-radius: 4px;
+  border: 1px solid #c98a00;
+  line-height: 1;
+}
+

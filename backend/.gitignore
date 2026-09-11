@@ -1,0 +1,8 @@
+node_modules
+dist
+.env
+*.log
+
+# Seed data CSVs contain employee PII — never commit. Download separately,
+# see backend/scripts/README.md
+*.csv

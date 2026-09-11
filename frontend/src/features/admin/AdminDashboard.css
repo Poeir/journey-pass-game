@@ -1,0 +1,56 @@
+.adm-dashboard__quest-total {
+  font-size: 16px;
+  color: var(--text-tertiary);
+  font-weight: 500;
+  margin-left: 4px;
+}
+
+.adm-dashboard__feed {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.adm-dashboard__feed-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  line-height: 1.4;
+}
+.adm-dashboard__feed-text { display: flex; flex-direction: column; }
+.adm-dashboard__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-top: 6px;
+  flex-shrink: 0;
+}
+.adm-dashboard__dot--match { background: var(--success); }
+.adm-dashboard__dot--mismatch { background: var(--validation); }
+
+.adm-dashboard__pairs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.adm-dashboard__pair {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 13px;
+  border-bottom: 1px dashed var(--border-default);
+  padding-bottom: 8px;
+}
+.adm-dashboard__pair:last-child { border-bottom: none; padding-bottom: 0; }
+
+.adm-dashboard__note {
+  align-self: flex-start;
+  max-width: 560px;
+}

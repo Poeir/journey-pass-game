@@ -1,0 +1,23 @@
+.section-label {
+  color: var(--gray-3);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.section-label--icon {
+  font-size: 13px;
+  margin-top: 4px;
+}
+.section-label--eyebrow {
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  margin-top: 6px;
+}
+.section-label__icon {
+  display: inline-flex;
+  align-items: center;
+}
+.section-label__icon--blue { color: var(--venio-bluetiful); }
+.section-label__icon--flame { color: var(--gf-flame); }
+.section-label__icon--gold { color: #c98a00; }
+.section-label__icon--neutral { color: var(--gray-3); }

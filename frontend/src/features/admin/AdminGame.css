@@ -1,0 +1,27 @@
+.adm-game__danger {
+  border-color: rgba(222, 58, 69, 0.3);
+}
+.adm-game__danger .adm-panel__title { color: var(--validation); }
+
+.adm-game__readonly {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: var(--r-md);
+  background: var(--gray-11);
+  border: 1px solid var(--border-default);
+  font-size: 13px;
+}
+
+.adm-game__wipe-counts {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 4px 12px;
+  font-size: 13px;
+}
+.adm-game__wipe-counts code {
+  font-size: 12px;
+  color: var(--text-secondary);
+}

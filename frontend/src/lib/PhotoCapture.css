@@ -1,0 +1,101 @@
+.photo-capture {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.photo-capture__label {
+  font-size: 12px;
+  color: var(--gray-3);
+  text-align: center;
+}
+
+.photo-capture__preview-wrap {
+  width: 100%;
+  max-height: 220px;
+  display: flex;
+  justify-content: center;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #000;
+}
+
+.photo-capture__preview {
+  max-width: 100%;
+  max-height: 220px;
+  object-fit: contain;
+}
+
+.photo-capture__actions {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+}
+
+.photo-capture__link {
+  background: transparent;
+  border: none;
+  padding: 4px 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gray-3);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.photo-capture__link:hover:not(:disabled) {
+  color: var(--gray-1);
+}
+.photo-capture__link--accent { color: var(--gf-flame); }
+.photo-capture__link--accent:hover:not(:disabled) { color: var(--gray-1); }
+.photo-capture__link--accent.photo-capture__link--blue { color: var(--venio-bluetiful); }
+.photo-capture__link:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.photo-capture__idle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  align-self: center;
+  background: #fff;
+  border: 2px solid var(--gray-1);
+  border-radius: var(--r-md);
+  padding: 12px 22px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--gray-1);
+  cursor: pointer;
+  box-shadow: 2px 2px 0 var(--gray-1);
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
+}
+.photo-capture__idle:active:not(:disabled) {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 var(--gray-1);
+}
+.photo-capture__idle:disabled { opacity: 0.5; cursor: not-allowed; }
+.photo-capture__idle--flame {
+  background: var(--gf-flame);
+  border-color: var(--gray-1);
+  color: #fff;
+  box-shadow: 2px 2px 0 var(--gray-1);
+}
+.photo-capture__idle--flame:active:not(:disabled) {
+  box-shadow: 1px 1px 0 var(--gray-1);
+}
+.photo-capture__idle--blue {
+  background: var(--venio-bluetiful);
+  border-color: var(--gray-1);
+  color: #fff;
+  box-shadow: 2px 2px 0 var(--gray-1);
+}
+.photo-capture__idle--blue:active:not(:disabled) {
+  box-shadow: 1px 1px 0 var(--gray-1);
+}
+
+.photo-capture__done {
+  text-align: center;
+  color: var(--gf-flame);
+  font-size: 13px;
+  padding: 6px 0;
+}
